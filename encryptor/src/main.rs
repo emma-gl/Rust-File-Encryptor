@@ -4,26 +4,41 @@ use chacha20poly1305::{
     XChaCha20Poly1305,
 };
 use rand::{rngs::OsRng, RngCore};
-use std::{
-    fs::{self, File},
-    io::{Read, Write},
-};
+// use std::{
+//     fs::{self, File},
+//     io::{Read, Write},
+// };
+use std::fs;
 
-fn main() {
+fn main() -> Result<(), anyhow::Error> {
     let mut key = [0u8; 32];
     let mut nonce = [0u8; 24];
     OsRng.fill_bytes(&mut key);
     OsRng.fill_bytes(&mut nonce);
 
-    println!("Encrypting 100.bin to 100.encrypted");
-    encrypt_small_file(
-        "100.bin",
-        "100.encrypted",
-        &key,
-        &nonce,
-    );
+    for file in fs::read_dir("./").unwrap() {
+        println!("{}", file.unwrap().path().display());
+    }
+
+    // println!("Encrypting 100.bin to 100.encrypted");
+    // encrypt_small_file(
+    //     "confidential.txt",
+    //     "confidential.encrypted",
+    //     &key,
+    //     &nonce,
+    // )?;
+
+    // println!("Decrypting 100.encrypted to 100.decrypted");
+    // decrypt_small_file(
+    //     "confidential.encrypted",
+    //     "confidential.decrypted",
+    //     &key,
+    //     &nonce,
+    // )?;
+
 
     println!("Hello, world!");
+    Ok(())
 }
 
 fn encrypt_small_file(
