@@ -18,25 +18,15 @@ fn main() -> Result<(), anyhow::Error> {
     OsRng.fill_bytes(&mut key);
     OsRng.fill_bytes(&mut nonce);
 
-    let mut name = String::new();
-    println!("Enter the name of the file :");
-    //io::stdin().read_line(&mut name).expect("failed to readline");
-    let _=stdout().flush();
-    stdin().read_line(&mut name).expect("Did not enter a correct string");
-    if let Some('\n')=name.chars().next_back() {
-        name.pop();
-    }
-    if let Some('\r')=name.chars().next_back() {
-        name.pop();
-    }
+    let encrypt_or_decrpyt: String = get_input("Would you like to encrypt or decrypt?");
+
+    let name = get_input("What is the filename?");
     let mut filename: &str = name.as_str();
 
     for file in fs::read_dir("./").unwrap() {
         println!("{}", file.unwrap().path().display());
     }
-
-
-
+    if encrypt_or_decrpyt == "encrypt"{
     println!("Encrypting {}...", name);
     encrypt_small_file(
         filename,
@@ -44,7 +34,7 @@ fn main() -> Result<(), anyhow::Error> {
         &key,
         &nonce,
     )?;
-
+    } else {
     println!("Decrypting {}...", name);
     decrypt_small_file(
         filename,
@@ -52,10 +42,24 @@ fn main() -> Result<(), anyhow::Error> {
         &key,
         &nonce,
     )?;
-
+    }
 
     println!("Finit");
     Ok(())
+}
+
+fn get_input(prompt: &str)-> String {
+    let mut answer = String::new();
+    println!("{}", prompt);
+    let _= stdout().flush();
+    stdin().read_line(&mut answer).expect("Did not enter a correct string");
+    if let Some('\n')=answer.chars().next_back() {
+        answer.pop();
+    }
+    if let Some('\r')=answer.chars().next_back() {
+        answer.pop();
+    }
+    return answer;
 }
 
 fn encrypt_small_file(
