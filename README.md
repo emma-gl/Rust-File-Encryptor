@@ -8,9 +8,7 @@ My program has four main functionalities in which the user inputs what action th
 
 My purpose for writing this software was (in addition to learning rust,) to inform users about the importance of password protection by providing an easy way to generate a good password, hashing passwords, and encrypting/decrypting files.
 
-{Provide a link to your YouTube demonstration. It should be a 4-5 minute demo of the software running and a walkthrough of the code. Focus should be on sharing what you learned about the language syntax.}
-
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://www.loom.com/share/b77d579fecb64873b2c93679ce165d87)
 
 # Development Environment
 The main tool I used to develop the software was [cargo](https://doc.rust-lang.org/cargo/), the default package manager that comes with Rust. Cargo made it easy to manage the dependencies and compile/build the project. 
